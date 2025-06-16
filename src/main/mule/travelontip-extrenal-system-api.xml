@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="travelontip-extrenal-system-apiFlow" doc:id="28e2645c-42a0-4128-82e6-458d4d29a926" >
+		<http:listener doc:name="Listener" doc:id="20212920-84b4-45bf-a819-b5194958c8d9" config-ref="HTTP_Listener_configs" path="${http.basePath}"/>
+		<logger level="INFO" doc:name="Logger" doc:id="e4717feb-6fd8-42a6-b41d-a3e685063928" message="request recieved from the travelontip system api"/>
+		<ee:transform doc:name="Transform Message" doc:id="36810f29-3ceb-4bcf-b931-58b39da8f407" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="serviceType" ><![CDATA[attributes.uriParams.serviceType]]></ee:set-variable>
+				<ee:set-variable variableName="transactionId" ><![CDATA[attributes.headers.transactionId]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<choice doc:name="Choice" doc:id="13b4ddf1-cfdf-4353-806f-0d45484b50a4" >
+			<when expression='#[vars.serviceType == "routes"]'>
+				<logger level="INFO" doc:name="Logger" doc:id="5c6c5fe3-f60d-4f6f-a915-d1ac4e6379c0" />
+			</when>
+			<when expression='#[vars.serviceType == "schedule"]'>
+				<logger level="INFO" doc:name="Logger" doc:id="8242aeb8-a19e-45cc-ac66-c7d60cc23899" />
+			</when>
+			<otherwise >
+				<logger level="INFO" doc:name="Logger" doc:id="b11156f3-1c21-4f04-b2f0-c2e3554a5c8d" message="invalid serviceType"/>
+			</otherwise>
+		</choice>
+		<logger level="INFO" doc:name="Logger" doc:id="36dfc2d2-b2bc-49a1-99ee-07b915639d76" message="response send back to the travelontip system api"/>
+	</flow>
+</mule>

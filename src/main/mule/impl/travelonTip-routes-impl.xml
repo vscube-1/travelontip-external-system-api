@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<sub-flow name="travelonTip-routes-implSub_Flow" doc:id="3400e7ac-54b5-4a69-b251-29ce0a54a6e1" >
+		<logger level="INFO" doc:name="Logger" doc:id="b923b158-0d71-41bc-bea2-256b958946ad" message="travelOntip routes DB call started"/>
+		<db:select doc:id="ec10bf55-1929-4ac0-b61b-5214e81e29f2" />
+		<logger level="INFO" doc:name="Logger" doc:id="8dd9cb41-e2fa-4046-bc34-72b64db0004f" message="DB response recieved for travelonTip"/>
+	</sub-flow>
+</mule>
