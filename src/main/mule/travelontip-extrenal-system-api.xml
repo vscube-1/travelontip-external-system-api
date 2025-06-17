@@ -12,16 +12,18 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 			<ee:message >
 			</ee:message>
 			<ee:variables >
-				<ee:set-variable variableName="serviceType" ><![CDATA[attributes.uriParams.serviceType]]></ee:set-variable>
+				<ee:set-variable variableName="serviceType" ><![CDATA[attributes.queryParams.serviceType]]></ee:set-variable>
 				<ee:set-variable variableName="transactionId" ><![CDATA[attributes.headers.transactionId]]></ee:set-variable>
 			</ee:variables>
 		</ee:transform>
 		<choice doc:name="Choice" doc:id="13b4ddf1-cfdf-4353-806f-0d45484b50a4" >
 			<when expression='#[vars.serviceType == "routes"]'>
 				<logger level="INFO" doc:name="Logger" doc:id="5c6c5fe3-f60d-4f6f-a915-d1ac4e6379c0" />
+				<flow-ref doc:name="travelonTip-routes-implSub_Flow" doc:id="e61117c4-8a96-42e0-90f2-f7868679a6e5" name="travelonTip-routes-implSub_Flow"/>
 			</when>
 			<when expression='#[vars.serviceType == "schedule"]'>
 				<logger level="INFO" doc:name="Logger" doc:id="8242aeb8-a19e-45cc-ac66-c7d60cc23899" />
+				<flow-ref doc:name="travelOntip-schedules-implSub_Flow" doc:id="cac980e1-71a9-4790-87d9-c1985fcc595a" name="travelOntip-schedules-implSub_Flow"/>
 			</when>
 			<otherwise >
 				<logger level="INFO" doc:name="Logger" doc:id="b11156f3-1c21-4f04-b2f0-c2e3554a5c8d" message="invalid serviceType"/>

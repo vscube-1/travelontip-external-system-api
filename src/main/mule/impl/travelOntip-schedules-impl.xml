@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="travelOntip-schedules-implSub_Flow" doc:id="066f6c77-fb98-40bd-b266-92dd0ac39ac0" >
+		<logger level="INFO" doc:name="start logger" doc:id="57cef888-2c16-4698-94d3-3fbc2deec56e" message="calling database for travelontip schedules info started"/>
+		<until-successful maxRetries="3" doc:name="Until Successful" doc:id="25dd2c14-fce3-4510-a66d-63a1809fa07b" >
+			<db:select doc:name="Select" doc:id="10c6faca-cc8b-4500-91d7-7001eadb2cee" config-ref="Database_Configs">
+			<db:sql><![CDATA[select * from schedules where companyname = 'TravelOnTip';]]></db:sql>
+		</db:select>
+		</until-successful>
+		<ee:transform doc:name="Transform Message" doc:id="4c54bda9-6514-4e54-a55f-20019385c301" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="end logger" doc:id="93097d0a-5fa3-48e9-b526-6945c08a254c" message="response recived from DB for travelOntip schedules"/>
+	</sub-flow>
+</mule>
